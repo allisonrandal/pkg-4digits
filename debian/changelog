@@ -1,3 +1,10 @@
+4digits (0.8-1) unstable; urgency=low
+
+  * New upstream version. (Closes: #460538, #449139)
+  * Fixed debian/watch. (Closes: #450113)
+
+ -- Cai Qian <caiqian@debian.org>  Wed, 06 Feb 2008 13:11:00 +0800
+	
 4digits (0.4-1) unstable; urgency=low
 
   * Initial release (Closes: #415838)

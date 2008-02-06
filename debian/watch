@@ -17,4 +17,4 @@ version=3
 #ftp://ftp.example.com/pub/4digits-(.*)\.tar\.gz debian uupdate
 
 # Uncomment to find new files on sourceforge, for debscripts >= 2.9
-http://sf.net/4digits/4digits(.*)\.tar\.bz2
+http://sf.net/fourdigits/4digits(.*)\.tar\.bz2
