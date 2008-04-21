@@ -1,0 +1,4 @@
+?package(4digits):needs="X11" section="Games/Board"\
+  longtitle="guess the number using obscure hints"\
+  icon="4digits_32x32.xpm"\
+  title="4digits" command="/usr/games/4digits"

@@ -16,8 +16,6 @@
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
-
-
 CFLAGS = -Wall -g
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
@@ -33,7 +31,6 @@ configure-stamp:
 
 	touch configure-stamp
 
-
 #Architecture 
 build: build-arch build-indep
 
@@ -42,6 +39,7 @@ build-arch-stamp: configure-stamp
 
 	# Add here commands to compile the arch part of the package.
 	$(MAKE) 
+	convert 4digits.xpm -scale 32x32 4digits_32x32.xpm
 	touch $@
 
 build-indep: build-indep-stamp
@@ -54,11 +52,11 @@ build-indep-stamp: configure-stamp
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-arch-stamp build-indep-stamp #CONFIGURE-STAMP#
+	rm -f build-arch-stamp build-indep-stamp configure-stamp
 
 	# Add here commands to clean up after the build process.
-	#-$(MAKE) clean
-	rm -f 4digits-text
+	$(MAKE) clean
+	rm -f 4digits_32x32.xpm
 
 	dh_clean 
 
@@ -103,6 +101,7 @@ install-arch:
 
 	install -d $(CURDIR)/debian/4digits/usr/share/pixmaps
 	install -m 0644 4digits.xpm $(CURDIR)/debian/4digits/usr/share/pixmaps
+	install -m 0644 4digits_32x32.xpm $(CURDIR)/debian/4digits/usr/share/pixmaps
 
 	install -d $(CURDIR)/debian/4digits/usr/share/applications
 	install -m 0644 4digits.desktop $(CURDIR)/debian/4digits/usr/share/applications
@@ -116,23 +115,12 @@ binary-common:
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
-#	dh_installexamples
-#	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate	
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_python
-#	dh_installinit
-#	dh_installcron
-#	dh_installinfo
+	dh_installmenu
 	dh_installman
 	dh_link
 	dh_strip
 	dh_compress 
 	dh_fixperms
-#	dh_perl
 	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps

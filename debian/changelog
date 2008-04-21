@@ -1,3 +1,16 @@
+4digits (0.8-2) unstable; urgency=low
+
+  * QA upload.
+  * Change maintainer to Debian QA groups <packages@qa.debian.org>
+  * Add depends on python-gnome2 (Closes: #475143)
+  * Bump Standard-Version to 3.7.3, nothing needed to be changed
+  * Add Homepage field in debian/control
+  * Fix bugs in debian/watch
+  * Add debian/menu
+    + Add 32x32 icon for menu item
+
+ -- Ying-Chun Liu (PaulLiu) <grandpaul@gmail.com>  Mon, 21 Apr 2008 22:01:45 +0800
+
 4digits (0.8-1) unstable; urgency=low
 
   * New upstream version. (Closes: #460538, #449139)

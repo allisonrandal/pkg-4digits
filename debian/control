@@ -1,13 +1,14 @@
 Source: 4digits
 Section: games
 Priority: extra
-Maintainer: Cai Qian <caiqian@debian.org>
-Build-Depends: debhelper (>= 5)
-Standards-Version: 3.7.2
+Maintainer: Debian QA Group <packages@qa.debian.org>
+Build-Depends: debhelper (>= 5), imagemagick
+Standards-Version: 3.7.3
+Homepage: http://sourceforge.net/projects/fourdigits/
 
 Package: 4digits
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python, python-glade2
+Depends: ${shlibs:Depends}, ${misc:Depends}, python, python-glade2, python-gnome2
 Description: A guess-the-number game, aka Bulls and Cows
  4digits is a guess-the-number puzzle game. It's called Bulls and Cows,
  and in China people simply call it Guess-the-Number. The game's
