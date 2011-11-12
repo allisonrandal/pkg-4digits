@@ -1,9 +1,20 @@
 4digits: A guess-the-number game, aka Bulls and Cows
 
+Version 0.9 (10/17/2008):
+    GUI version:
+    * Program preferences is now persistent through sessions.
+    * Minor user interface tweaks.
+    * Much code cleanup. 
+
+    Text version:
+    * Moved score file to ~/.4digits/.
+    * Program messages are now the same as in GUI version.
+    * Much code cleanup.
+
 Version 0.8 (11/22/2007):
     GUI version:
     * High score recording and viewing.
-    * A hint table, which can be used to mark possibilites.
+    * A hint table, which can be used to mark possibilities.
     * Auto filling hint table.
     * Desktop entry file.
     * An install script in python copied from Comix.
