@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=4digits
+Name[zh_CN]=猜数字
+Name[zh_HK]=猜數字
+Name[zh_TW]=猜數字
+Comment=A guess-the-number game, aka Bulls and Cows
+Comment[zh_CN]=猜数字游戏
+Comment[zh_HK]=猜數字游戲
+Comment[zh_TW]=猜數字游戲
+Exec=4digits
+Icon=4digits
+Terminal=false
+Type=Application
+Categories=Game;LogicGame;GTK
