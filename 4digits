@@ -1,0 +1,212 @@
+#!/usr/bin/env python
+
+# 4digits is a guess-the-number puzzle game. You are given eight times
+# to guess a four-digit number. One digit is marked A if its value and
+# position are both correct, and marked B if only its value is correct.
+# You win the game when you get 4A0B. Good luck!
+#
+# Copyright (c) 2004-2007 Pan Yongzhi <panyongzhi [at] gmail [dot] com>
+#
+# 4digits is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+# 
+# 4digits is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with 4digits; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+import gtk
+import gtk.glade
+import os
+import random
+import time
+import webbrowser
+
+gladefile = '/usr/share/4digits/4digits.glade'
+helpfile = '/usr/share/doc/4digits/index.html'
+
+class fourDigits:
+    """This is the main class"""
+    def __init__(self):
+        """GUI initialization"""
+        self.wTree = gtk.glade.XML(gladefile) 
+
+        self.toolbar = self.wTree.get_widget('toolbar')
+        self.view_toolbar = self.wTree.get_widget('view_toolbar')
+
+        self.entry = self.wTree.get_widget('entry')
+        self.entry.grab_focus()
+
+        self.btOK = self.wTree.get_widget('btOK')
+        self.btOK.set_sensitive(True)
+        self.entry.set_sensitive(True)
+
+        self.table = self.wTree.get_widget("table1")
+        for widget in ('g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7',
+                'r0', 'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7'):
+            setattr(self, widget, self.wTree.get_widget(widget))
+        self.info_label = self.wTree.get_widget('info_label')
+        self.time_label = self.wTree.get_widget('time_label')
+        dic = {"on_window1_destroy": gtk.main_quit,
+                "on_btQuit_clicked": gtk.main_quit,
+                "on_mQuit_activate": gtk.main_quit,
+                "on_btOK_clicked": self.on_entry_activate,
+                'on_new_game': self.on_new_game,
+                'on_view_toolbar_toggled': self.on_view_toolbar_toggled,
+                'on_entry_activate': self.on_entry_activate,
+                'on_entry_changed': self.on_entry_changed,
+                'on_mHelp_activate' : self.on_mHelp_activate,
+                "on_mAbout_activate" : self.on_mAbout_activate}
+        self.wTree.signal_autoconnect(dic)
+        # new game initialization
+        self.game = newRound()
+
+    def on_entry_activate(self, widget):
+        """when input is accepted"""
+        A, B = 0, 0
+        number = ''
+        # check input
+        if self.game.guess < 8:
+            number = self.entry.get_text()
+            if number == '':
+                self.error_process('Must input something.')
+                return False
+            elif number[0] == '0':
+                self.error_process('First digit cannot be zero.')
+                return False
+            try:
+                number = repr(int((number)))
+            except ValueError:
+                self.error_process('Must input a number.')
+                return False
+            if len(number) < 4:
+                self.error_process('Must input four digits.')
+                return False
+            elif len(set(number)) <4:
+                self.error_process('Four digits must be unique.')
+                return False
+            elif number in self.game.guesses:
+                self.error_process("You've guessed it.")
+                return False
+            self.game.guesses.append(number)
+            # process input
+            for i in xrange(4):
+                for j in xrange(4):
+                    if self.game.answer[i] == int(number[j]):
+                        if i == j:
+                            A += 1
+                        else:
+                            B += 1
+            guess_label = getattr(self, 'g' + repr(self.game.guess))
+            result_label = getattr(self, 'r' + repr(self.game.guess))
+            guess_label.set_text(number)
+            result_label.set_text('%dA%dB' % (A, B))
+            
+            # win
+            if A == 4:
+                self.info_label.set_text('You win! :)')
+                self.get_time_taken_till_now()
+                self.time_label.set_text('Used %s s.' % self.game.time_taken)
+                self.btOK.set_sensitive(False)
+                self.entry.set_sensitive(False)
+            # lose
+            elif self.game.guess == 7:
+                answer = ''
+                for i in xrange(4):
+                    answer += repr(self.game.answer[i])
+                self.info_label.set_text('Haha, you lose. It is %s.' % answer)
+                self.get_time_taken_till_now()
+                self.time_label.set_text('Wasted %s s.' % self.game.time_taken)
+                self.btOK.set_sensitive(False)
+                self.entry.set_sensitive(False)
+        self.game.guess += 1
+        self.entry.grab_focus()
+
+    def on_entry_changed(self, widget):
+        self.info_label.set_text('')
+        if self.game.on_entry_cb_first_called_in_this_round == True:
+            self.time_label.set_text('Timer started...')
+            self.game.time_start = time.time()
+            self.game.on_entry_cb_first_called_in_this_round = False
+  
+    def on_view_toolbar_toggled(self, widget):
+        """Toggle toolbar visibility"""
+        if self.view_toolbar.get_active():
+            self.toolbar.show()
+        else:
+            self.toolbar.hide()
+
+    def on_mHelp_activate(self, widget):
+        webbrowser.open(helpfile)
+
+    def on_mAbout_activate(self, widget):
+        about = aboutDialog().dAbout
+        about.run()
+        about.destroy()
+
+    def on_new_game(self, widget):
+        """New game initialization"""
+        self.game = newRound()
+        self.btOK.set_sensitive(True)
+        self.entry.set_sensitive(True)
+        self.entry.grab_focus()
+        # won't start the timer when you just start a new game
+        self.game.on_entry_cb_first_called_in_this_round = False
+        self.entry.set_text('')
+        self.game.on_entry_cb_first_called_in_this_round = True
+        self.info_label.set_text('Ready')
+        self.time_label.set_text('')
+
+        for i in xrange(8):
+            getattr(self, 'g' + repr(i)).set_text('')
+            getattr(self, 'r' + repr(i)).set_text('')
+        
+    def error_process(self, msg):
+        self.info_label.set_text(msg)
+        self.entry.grab_focus()
+
+    def get_time_taken_till_now(self):
+        self.game.time_end = time.time()
+        self.game.time_taken = self.game.time_end - self.game.time_start
+        self.game.time_taken = '%.1f' % round(self.game.time_taken, 1)
+
+class aboutDialog:
+    """the about dialog"""
+    def __init__(self):
+        self.wTree = gtk.glade.XML(gladefile, 'dAbout') 
+        self.dAbout = self.wTree.get_widget("dAbout")
+        self.dAbout.set_name('4digits')
+        self.dAbout.set_title('About 4digits')
+        gtk.about_dialog_set_url_hook(lambda about_dialog, url: webbrowser.open(url))
+        self.dAbout.set_website('http://pan.cdut.cn/4digits')
+        self.dAbout.set_website_label('http://pan.cdut.cn/4digits')
+
+class newRound:
+    """Tihs class contains data in one round of the game"""
+    def __init__(self):
+        while 1:
+            self.answer = random.sample(range(10), 4)
+            if self.answer[0] != 0:
+                break
+        if self.answer == 4619:
+            print 'You are the luckiest guy on the planet!'
+        #print self.answer
+        self.guess = 0
+        self.guesses = []
+        self.time_start = 0
+        self.time_end = 0
+        self.time_taken = 0
+        self.on_entry_cb_first_called_in_this_round = True
+
+def start_game():
+    fourdigits = fourDigits()
+    gtk.main()
+
+if __name__ == "__main__":
+    start_game()
