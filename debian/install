@@ -1,0 +1,5 @@
+4digits usr/games
+4digits-text usr/games
+debian/4digits.xpm usr/share/pixmaps
+4digits.desktop usr/share/applications
+4digits.glade usr/share/4digits

@@ -1,0 +1,10 @@
+Document: 4digits
+Title: 4digits Puzzle Game Manual
+Author: Yongzhi Pan
+Abstract: This manual describes the 4digits game
+ and how to use it.
+Section: Games/Board
+
+Format: HTML
+Index: /usr/share/doc/4digits/index.html
+Files: /usr/share/doc/4digits/*.html

@@ -1,3 +1,37 @@
+4digits (1.0-1) unstable; urgency=low
+  * New upstream release.
+  * Change maintainer to Yongzhi Pan <panyongzhi@gmail.com>.
+  * debian/control:
+    - Bumped Standards-Version to 3.9.2.
+    - Updated debhelper to version 8, recommended
+      compatibility level.
+    - Dropped imagemagick build dependency, no longer used
+      during build.
+  * debian/compat:
+    - Updated debhelper to version 8, recommended
+      compatibility level.
+  * debian/copyright:
+    - Updated format to DEP5.
+  * debian/source:
+    - Added source package format "3.0 (quilt)".
+  * debian/rules:
+    - Changed to simple default debhelper rules, with
+      dh_python2.
+  * debian/docs:
+    - Added list of doc files to install, so debian/rules
+      needs no custom targets.
+  * debian/install:
+    - Added list of files to install, so debian/rules needs
+      no custom targets.
+  * debian/menu:
+    - Changed path to .xpm icon to standard pixmaps
+      directory.
+  * debian/4digits.xpm:
+    - Added .xpm format icon for menu, since it's no longer
+      included upstream.
+
+ -- Allison Randal <allison@lohutok.net>  Sat, 12 Nov 2011 17:42:00 -0800
+
 4digits (0.8-2) unstable; urgency=low
 
   * QA upload.
