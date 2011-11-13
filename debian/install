@@ -3,3 +3,4 @@
 debian/4digits.xpm usr/share/pixmaps
 4digits.desktop usr/share/applications
 4digits.glade usr/share/4digits
+4digits_logo.png usr/share/4digits
