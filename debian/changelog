@@ -7,6 +7,7 @@
       compatibility level.
     - Dropped imagemagick build dependency, no longer used
       during build.
+    - Added python build dependency for dh_python2.
   * debian/compat:
     - Updated debhelper to version 8, recommended
       compatibility level.
@@ -30,7 +31,7 @@
     - Added .xpm format icon for menu, since it's no longer
       included upstream.
 
- -- Allison Randal <allison@lohutok.net>  Sat, 12 Nov 2011 17:42:00 -0800
+ -- Allison Randal <allison@lohutok.net>  Thu, 17 Nov 2011 17:59:53 -0800
 
 4digits (0.8-2) unstable; urgency=low
 
