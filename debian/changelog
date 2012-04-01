@@ -1,9 +1,13 @@
 4digits (1.1-1) unstable; urgency=low
- * New upstream release.
+
+  * New upstream release.
+  * debian/patches:
+    - Added patch to fix resource directory.
 
  -- Yongzhi Pan <panyongzhi@gmail.com>  Sat, 10 Dec 2011 10:11:04 +0800
 
 4digits (1.0-1) unstable; urgency=low
+
   * New upstream release.
   * Change maintainer to Yongzhi Pan <panyongzhi@gmail.com>.
   * debian/control:
@@ -57,10 +61,9 @@
   * Fixed debian/watch. (Closes: #450113)
 
  -- Cai Qian <caiqian@debian.org>  Wed, 06 Feb 2008 13:11:00 +0800
-	
+
 4digits (0.4-1) unstable; urgency=low
 
   * Initial release (Closes: #415838)
 
  -- Cai Qian <caiqian@debian.org>  Sat, 24 Mar 2007 13:37:18 +0800
-
