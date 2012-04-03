@@ -4,7 +4,7 @@
   * debian/patches:
     - Added patch to fix resource directory.
 
- -- Yongzhi Pan <panyongzhi@gmail.com>  Sat, 10 Dec 2011 10:11:04 +0800
+ -- Yongzhi Pan <panyongzhi@gmail.com>  Mon, 02 Apr 2012 21:50:03 -0700
 
 4digits (1.0-1) unstable; urgency=low
 
